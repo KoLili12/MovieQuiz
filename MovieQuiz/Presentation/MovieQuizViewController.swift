@@ -4,6 +4,10 @@ final class MovieQuizViewController: UIViewController {
     @IBOutlet private var imageView: UIImageView!
     @IBOutlet private var textLabel: UILabel!
     @IBOutlet private var counterLabel: UILabel!
+    
+    @IBOutlet var noButton: UIButton! // аутлет для того, чтоб выключать кнопку
+    @IBOutlet var yesButton: UIButton! // аутлет для того, чтоб выключать кнопку
+    
     private var currentQuestionIndex = 0
     private var correctAnswers = 0
     private let questions: [QuizQuestion] = [
@@ -80,9 +84,14 @@ final class MovieQuizViewController: UIViewController {
         imageView.image = step.image
         textLabel.text = step.question
         counterLabel.text = step.questionNumber
+        imageView.layer.borderColor = UIColor.ypBlack.cgColor // Теперь края сбрасывают цвет
+        yesButton.isEnabled = true // включаем кнопку
+        noButton.isEnabled = true // включаем кнопку
     }
     
     private func showAnswerResult(isCorrect: Bool) {
+        yesButton.isEnabled = false // выключаем кнопку
+        noButton.isEnabled = false // выключаем кнопку
         imageView.layer.masksToBounds = true
         imageView.layer.borderWidth = 8
         imageView.layer.cornerRadius = 20
@@ -156,7 +165,7 @@ final class MovieQuizViewController: UIViewController {
     }
 
     // для состояния "Результат квиза"
-    struct QuizResultsViewModel {
+    private struct QuizResultsViewModel {
       // строка с заголовком алерта
       let title: String
       // строка с текстом о количестве набранных очков
