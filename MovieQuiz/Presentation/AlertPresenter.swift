@@ -8,7 +8,7 @@
 import UIKit
 
 class AlertPresenter: AlertPresenterProtocol {
-    let deligate: (UIViewController & AlertDeligate)?
+    weak var deligate: (UIViewController & AlertDeligate)? // сделал слабой ссылкой
     
     init(deligate: (UIViewController & AlertDeligate)?) {
         self.deligate = deligate

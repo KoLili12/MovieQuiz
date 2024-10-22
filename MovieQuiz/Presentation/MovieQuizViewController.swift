@@ -90,12 +90,12 @@ final class MovieQuizViewController: UIViewController {
           // идём в состояние "Результат квиза"
             statisticService?.store(game: GameResult(correct: correctAnswers, total: questionsAmount, date: Date()))
             alertPresenter?.presentAlert(modelPr: AlertModel(
-                title: "Этот раунд окончен",
+                title: "Этот раунд окончен!",
                 message:
                 """
-                Ваш результат \(correctAnswers)/10\n
-                Колличетво сыграных квизов: \(statisticService?.gamesCount ?? 0)\n
-                Рекорд: \(statisticService?.bestGame.correct ?? 0)/10  (\(statisticService?.bestGame.date.dateTimeString ?? "-"))\n
+                Ваш результат \(correctAnswers)/10
+                Колличетво сыграных квизов: \(statisticService?.gamesCount ?? 0)
+                Рекорд: \(statisticService?.bestGame.correct ?? 0)/10  (\(statisticService?.bestGame.date.dateTimeString ?? "-"))
                 Средняя точность: \(statisticService?.totalAccuracy ?? 0)%
                 """,
                 buttonTitle: "Сыграть еще раз", comletion: nil)

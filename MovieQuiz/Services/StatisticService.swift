@@ -47,22 +47,18 @@ class StatisticService: StatisticServiceProtocol {
      
     var bestGame: GameResult {
         get {
-            if let data = storage.data(forKey: Keys.bestGame.rawValue),
-               let gameResult = try? JSONDecoder().decode(GameResult.self, from: data) {
-                return gameResult
-            }
-            return GameResult(correct: 0, total: 0, date: Date())
+            guard let res = storage.dictionary(forKey: Keys.bestGame.rawValue) else {return GameResult(correct: 0, total: 0, date: Date())}
+            return GameResult(correct: Int(res["correct"] as? Int ?? 0), total: Int(res["total"] as? Int ?? 0), date: res["date"] as? Date ?? Date())
         }
         set {
-            if let encodedData = try? JSONEncoder().encode(newValue) {
-                storage.set(encodedData, forKey: Keys.bestGame.rawValue)
-            }
+            let res = ["correct": newValue.correct, "total": newValue.total, "date": newValue.date] as [String: Any]
+            storage.set(res, forKey: Keys.bestGame.rawValue)
         }
     }
-
      
     var totalAccuracy: Double {
-        correctAnswers > 0 ? Double(correctAnswers) / (Double(10 * gamesCount)) : 0
+        let res: Double = correctAnswers > 0 ? (Double(correctAnswers) / (Double(10 * gamesCount))) * 100 : 0
+        return Double(round(100 * res) / 100)
     }
  }
 
