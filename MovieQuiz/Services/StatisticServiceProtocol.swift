@@ -10,7 +10,7 @@ import Foundation
 protocol StatisticServiceProtocol {
     var gamesCount: Int { get }
     var bestGame: GameResult { get }
-    var totalAccuracy: Double { get }
+    var totalAccuracy: String { get }
     
     func store(game: GameResult)
 }

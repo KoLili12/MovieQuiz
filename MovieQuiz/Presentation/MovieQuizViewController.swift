@@ -96,7 +96,7 @@ final class MovieQuizViewController: UIViewController {
                 Ваш результат \(correctAnswers)/10
                 Колличетво сыграных квизов: \(statisticService?.gamesCount ?? 0)
                 Рекорд: \(statisticService?.bestGame.correct ?? 0)/10  (\(statisticService?.bestGame.date.dateTimeString ?? "-"))
-                Средняя точность: \(statisticService?.totalAccuracy ?? 0)%
+                Средняя точность: \(statisticService?.totalAccuracy ?? "0.00")%
                 """,
                 buttonTitle: "Сыграть еще раз", comletion: nil)
             )

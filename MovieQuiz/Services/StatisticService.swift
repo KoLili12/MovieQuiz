@@ -18,17 +18,21 @@ class StatisticService: StatisticServiceProtocol {
     }
     
     private enum Keys: String {
-        case correct
+        case correctAnswer
         case bestGame
         case gamesCount
+        
+        case correct
+        case total
+        case date
     }
     
     private var correctAnswers: Int {
         get {
-            storage.integer(forKey: Keys.correct.rawValue)
+            storage.integer(forKey: Keys.correctAnswer.rawValue)
         }
         set {
-            storage.set(newValue, forKey: Keys.correct.rawValue)
+            storage.set(newValue, forKey: Keys.correctAnswer.rawValue)
         }
     }
     
@@ -48,7 +52,7 @@ class StatisticService: StatisticServiceProtocol {
     var bestGame: GameResult {
         get {
             guard let res = storage.dictionary(forKey: Keys.bestGame.rawValue) else {return GameResult(correct: 0, total: 0, date: Date())}
-            return GameResult(correct: Int(res["correct"] as? Int ?? 0), total: Int(res["total"] as? Int ?? 0), date: res["date"] as? Date ?? Date())
+            return GameResult(correct: Int(res[Keys.correct.rawValue] as? Int ?? 0), total: Int(res[Keys.total.rawValue] as? Int ?? 0), date: res[Keys.date.rawValue] as? Date ?? Date())
         }
         set {
             let res = ["correct": newValue.correct, "total": newValue.total, "date": newValue.date] as [String: Any]
@@ -56,9 +60,9 @@ class StatisticService: StatisticServiceProtocol {
         }
     }
      
-    var totalAccuracy: Double {
+    var totalAccuracy: String {
         let res: Double = correctAnswers > 0 ? (Double(correctAnswers) / (Double(10 * gamesCount))) * 100 : 0
-        return Double(round(100 * res) / 100)
+        return String(format: "%.2f", res)
     }
  }
 
