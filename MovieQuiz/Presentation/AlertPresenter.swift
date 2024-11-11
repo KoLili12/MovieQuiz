@@ -20,6 +20,8 @@ class AlertPresenter: AlertPresenterProtocol {
             message: modelPr.message,
             preferredStyle: .alert)
         
+        alert.view.accessibilityIdentifier = "Alert"
+        
         let action = UIAlertAction(title: modelPr.buttonTitle, style: .default) { [weak deligate] _ in
             deligate?.didReceiveResultAlert()
         }
