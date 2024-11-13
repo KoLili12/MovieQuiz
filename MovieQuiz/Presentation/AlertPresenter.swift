@@ -28,6 +28,6 @@ class AlertPresenter: AlertPresenterProtocol {
 
         alert.addAction(action)
 
-        deligate?.present(alert, animated: true, completion: modelPr.comletion)
+        deligate?.present(alert, animated: true, completion: nil)
     }
 }

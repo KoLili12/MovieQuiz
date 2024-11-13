@@ -1,6 +1,8 @@
 import UIKit
 
 final class MovieQuizViewController: UIViewController, MovieQuizViewControllerProtocol {
+    var alertPresenter: AlertPresenterProtocol?
+    
     @IBOutlet private var imageView: UIImageView!
     @IBOutlet private var textLabel: UILabel!
     @IBOutlet private var counterLabel: UILabel!
@@ -8,7 +10,6 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
     @IBOutlet var yesButton: UIButton!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
-    var alertPresenter: AlertPresenterProtocol?
     private var presenter: MovieQuizPresenter!
     
     // MARK: - Lifecycle
@@ -17,18 +18,7 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
         super.viewDidLoad()
         alertPresenter = AlertPresenter(deligate: self)
         presenter = MovieQuizPresenter(viewController: self)
-        showLoadingIndicator()
     }
-    
-    // MARK: - Actions
-    
-    @IBAction private func yesButtonClicked(_ sender: UIButton) {
-            presenter.yesButtonClicked()
-        }
-    
-    @IBAction private func noButtonClicked(_ sender: UIButton) {
-            presenter.noButtonClicked()
-        }
     
     // MARK: - Private functions
     
@@ -57,19 +47,26 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
     }
     
     func showNetworkError(message: String) {
-        activityIndicator.isHidden = true // скрываем индикатор загрузки
-        
         // создайте и покажите алерт
-        let alert = AlertModel(title: "Ошибка", message: message, buttonTitle: "Попробовать еще раз") { [weak self] in
-            guard let self = self else { return }
-            self.presenter.restartGame()
-        }
+        let alert = AlertModel(title: "Ошибка", message: message, buttonTitle: "Попробовать еще раз")
         alertPresenter?.presentAlert(modelPr: alert)
     }
     
     func hideLoadingIndicator() {
         activityIndicator.isHidden = true
     }
+    
+    // MARK: - Actions
+    
+    @IBAction private func yesButtonClicked(_ sender: UIButton) {
+            yesButton.isEnabled = false // выключаем кнопку
+            presenter.yesButtonClicked()
+        }
+    
+    @IBAction private func noButtonClicked(_ sender: UIButton) {
+            noButton.isEnabled = false // выключаем кнопку
+            presenter.noButtonClicked()
+        }
 }
 
 // MARK: - AlertDeligate
