@@ -20,12 +20,14 @@ class AlertPresenter: AlertPresenterProtocol {
             message: modelPr.message,
             preferredStyle: .alert)
         
+        alert.view.accessibilityIdentifier = "Alert"
+        
         let action = UIAlertAction(title: modelPr.buttonTitle, style: .default) { [weak deligate] _ in
             deligate?.didReceiveResultAlert()
         }
 
         alert.addAction(action)
 
-        deligate?.present(alert, animated: true, completion: modelPr.comletion)
+        deligate?.present(alert, animated: true, completion: nil)
     }
 }
