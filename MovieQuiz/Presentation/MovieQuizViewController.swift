@@ -16,7 +16,7 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        alertPresenter = AlertPresenter(deligate: self)
+        alertPresenter = AlertPresenter(delegate: self)
         presenter = MovieQuizPresenter(viewController: self)
     }
     
@@ -71,7 +71,7 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
 
 // MARK: - AlertDeligate
 
-extension MovieQuizViewController: AlertDeligate {
+extension MovieQuizViewController: AlertDelegate {
     func didReceiveResultAlert() { // метод делегата для алерта
         self.presenter.restartGame()
     }

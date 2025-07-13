@@ -8,10 +8,10 @@
 import UIKit
 
 class AlertPresenter: AlertPresenterProtocol {
-    weak var deligate: (UIViewController & AlertDeligate)? // сделал слабой ссылкой
+    weak var delegate: (UIViewController & AlertDelegate)? // сделал слабой ссылкой
     
-    init(deligate: (UIViewController & AlertDeligate)?) {
-        self.deligate = deligate
+    init(delegate: (UIViewController & AlertDelegate)?) {
+        self.delegate = delegate
     }
     
     func presentAlert(modelPr: AlertModel) {
@@ -22,12 +22,12 @@ class AlertPresenter: AlertPresenterProtocol {
         
         alert.view.accessibilityIdentifier = "Alert"
         
-        let action = UIAlertAction(title: modelPr.buttonTitle, style: .default) { [weak deligate] _ in
-            deligate?.didReceiveResultAlert()
+        let action = UIAlertAction(title: modelPr.buttonTitle, style: .default) { [weak delegate] _ in
+            delegate?.didReceiveResultAlert()
         }
 
         alert.addAction(action)
 
-        deligate?.present(alert, animated: true, completion: nil)
+        delegate?.present(alert, animated: true, completion: nil)
     }
 }
